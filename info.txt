@@ -1,0 +1,29 @@
+-- ai_repo.ai_rag_kb_doc definition
+
+CREATE TABLE `ai_rag_kb_doc` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '主键',
+  `kb_id` bigint(20) NOT NULL COMMENT '知识库id',
+  `filename` varchar(256) NOT NULL COMMENT '文件名称',
+  `file_suffix` varchar(8) NOT NULL COMMENT '文件类型',
+  `file_path` varchar(512) NOT NULL DEFAULT '' COMMENT '文件存储路径',
+  `file_mime_type` varchar(128) NOT NULL DEFAULT '' COMMENT '文件MIME类型',
+  `file_size` int(11) NOT NULL DEFAULT '0' COMMENT '文件大小',
+  `vs_id` varchar(64) NOT NULL DEFAULT '' COMMENT '向量库关联id',
+  `qa_task_id` varchar(256) NOT NULL DEFAULT '' COMMENT 'QA任务id',
+  `qa_num` varchar(100) NOT NULL DEFAULT '0' COMMENT 'QA数量',
+  `qa_status` tinyint(4) NOT NULL DEFAULT '0' COMMENT 'QA状态; 0-无需处理; 1-待处理; 2-处理中; 处理完成; 99-异常',
+  `chunk_task_id` varchar(256) NOT NULL DEFAULT '' COMMENT '分块任务id',
+  `chunk_num` int(11) NOT NULL COMMENT '分块数量',
+  `chunk_status` tinyint(4) NOT NULL DEFAULT '0' COMMENT '分块状态; 0-无需处理; 1-待处理; 2-处理中; 处理完成; 99-异常',
+  `chunking_url` varchar(256) NOT NULL DEFAULT '' COMMENT '分块接口URL',
+  `status` tinyint(4) NOT NULL DEFAULT '0' COMMENT '状态;1-处理中; 2-处理完成',
+  `user_id` bigint(20) NOT NULL COMMENT '用户id',
+  `create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `creator` varchar(64) NOT NULL DEFAULT 'system' COMMENT '创建人',
+  `update_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+  `updater` varchar(64) NOT NULL DEFAULT 'system' COMMENT '更新人',
+  `deleted` bit(1) NOT NULL DEFAULT b'0' COMMENT '逻辑删除字段',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5992 DEFAULT CHARSET=utf8mb4 COMMENT='RAG知识库文档';
+
+

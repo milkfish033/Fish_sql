@@ -1,11 +1,10 @@
-
 import llama_index.core
 from llama_index.core.query_pipeline import  QueryPipeline as QP
 from llama_index.core.agent import QueryPipelineAgentWorker
 from llama_index.core.settings import Settings
 from llama_index.core.callbacks import CallbackManager
 from llama_index.core import SQLDatabase
-from sqlalchemy import (create_engine,)
+from sqlalchemy import create_engine
 from llama_index.core.query_engine import NLSQLTableQueryEngine
 from llama_index.core import SQLDatabase
 from llama_index.core.tools import QueryEngineTool
@@ -22,12 +21,11 @@ from llama_index.core.query_pipeline import (
     ToolRunnerComponent,
 )
 from llama_index.core.llms import MessageRole
-from typing import Dict, Any, List, cast
+from typing import Dict, Any, List
 from llama_index.core.agent import ReActChatFormatter
 from llama_index.core.llms import ChatMessage
 from llama_index.core.tools import BaseTool
 
-from typing import Set, Optional
 from llama_index.core.agent.react.output_parser import ReActOutputParser
 from llama_index.core.llms import ChatResponse
 from llama_index.core.agent.types import Task

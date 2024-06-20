@@ -9,6 +9,9 @@ Natural Language to Sql
 (ii)Excute query and return the result back 
 
 
+***What's new***
+
+06/20/2024: Use llamaindex agent to refine generating Sql query (Check nl2sql.py)
 
 
 

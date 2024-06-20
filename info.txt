@@ -26,4 +26,47 @@ CREATE TABLE `ai_rag_kb_doc` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5992 DEFAULT CHARSET=utf8mb4 COMMENT='RAG知识库文档';
 
+-- ai_repo.ai_llm_comparison_chat definition
 
+CREATE TABLE `ai_llm_comparison_chat` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '主键',
+  `session_id` bigint(20) NOT NULL COMMENT '会话id',
+  `model_name` varchar(64) NOT NULL COMMENT '模型名称',
+  `prompt` text NOT NULL COMMENT '模型输入',
+  `completion` text NOT NULL COMMENT '模型输出',
+  `max_tokens` int(11) NOT NULL DEFAULT '0' COMMENT '最大生成长度',
+  `top_p` double NOT NULL DEFAULT '0' COMMENT 'top_p采样值',
+  `temperature` double NOT NULL DEFAULT '0' COMMENT '温度系数',
+  `evaluation` tinyint(4) NOT NULL DEFAULT '0' COMMENT '结果评分',
+  `user_id` bigint(20) NOT NULL COMMENT '用户id',
+  `create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `creator` varchar(64) NOT NULL DEFAULT 'system' COMMENT '创建人',
+  `update_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+  `updater` varchar(64) NOT NULL DEFAULT 'system' COMMENT '更新人',
+  `deleted` bit(1) NOT NULL DEFAULT b'0' COMMENT '逻辑删除字段',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=694 DEFAULT CHARSET=utf8mb4 COMMENT='大模型比较对话表';
+
+
+-- ai_repo.ai_rag_kb definition
+
+CREATE TABLE `ai_rag_kb` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '主键',
+  `name` varchar(64) NOT NULL COMMENT '知识库名称',
+  `description` varchar(512) NOT NULL DEFAULT '' COMMENT '描述',
+  `embedding_model` varchar(64) NOT NULL COMMENT 'embedding_model',
+  `layer_id` int(11) NOT NULL COMMENT '层级id',
+  `kb_faq_fk` varchar(256) NOT NULL DEFAULT '' COMMENT '知识库FAQ外键',
+  `kb_doc_fk` varchar(256) NOT NULL DEFAULT '' COMMENT '知识库文档外键',
+  `vs_faq_id` varchar(64) NOT NULL DEFAULT '' COMMENT '向量库FAQ知识库id',
+  `vs_faq_name` varchar(64) NOT NULL DEFAULT '' COMMENT '向量库FAQ知识库名称',
+  `vs_doc_id` varchar(64) NOT NULL DEFAULT '' COMMENT '向量库文档知识库id',
+  `vs_doc_name` varchar(64) NOT NULL DEFAULT '' COMMENT '向量库文档知识库名称',
+  `user_id` bigint(20) NOT NULL COMMENT '用户id',
+  `create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `creator` varchar(64) NOT NULL DEFAULT 'system' COMMENT '创建人',
+  `update_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+  `updater` varchar(64) NOT NULL DEFAULT 'system' COMMENT '更新人',
+  `deleted` bit(1) NOT NULL DEFAULT b'0' COMMENT '逻辑删除字段',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=233 DEFAULT CHARSET=utf8mb4 COMMENT='RAG知识库管理';

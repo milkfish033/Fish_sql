@@ -37,12 +37,16 @@ city_stats_table = Table(
     Column("population", Integer),
     Column("country", String(16), nullable=False),
 )
+
 metadata_obj.create_all(engine)
+
 from llama_index.core import SQLDatabase
 from llama_index.llms.openai import OpenAI
+
 llm = OpenAI(temperature=0.1, model="gpt-3.5-turbo")
 sql_database = SQLDatabase(engine, include_tables=["city_stats"])
 sql_database = SQLDatabase(engine, include_tables=["city_stats"])
+
 from sqlalchemy import insert
 
 rows = [
@@ -55,10 +59,13 @@ rows = [
     },
     {"city_name": "Seoul", "population": 9776000, "country": "South Korea"},
 ]
+
 for row in rows:
     stmt = insert(city_stats_table).values(**row)
     with engine.begin() as connection:
         cursor = connection.execute(stmt)
+
+
 # view current table
 stmt = select(
     city_stats_table.c.city_name,
@@ -82,9 +89,14 @@ from llama_index.core.query_engine import NLSQLTableQueryEngine
 query_engine = NLSQLTableQueryEngine(
     sql_database=sql_database, tables=["city_stats"], llm=llm
 )
+
 query_str = "Which city has the highest population?"
+
 response = query_engine.query(query_str)
+
 display(Markdown(f"{response}"))
+
+
 from llama_index.core.indices.struct_store.sql_query import (
     SQLTableRetrieverQueryEngine,
 )
@@ -97,6 +109,7 @@ from llama_index.core import VectorStoreIndex
 
 # set Logging to DEBUG for more detailed outputs
 table_node_mapping = SQLTableNodeMapping(sql_database)
+
 table_schema_objs = [
     (SQLTableSchema(table_name="city_stats"))
 ]  # add a SQLTableSchema for each table
@@ -106,13 +119,17 @@ obj_index = ObjectIndex.from_objects(
     table_node_mapping,
     VectorStoreIndex,
 )
+
 query_engine = SQLTableRetrieverQueryEngine(
     sql_database, obj_index.as_retriever(similarity_top_k=1)
 )
+
 response = query_engine.query("Which city has the highest population?")
 display(Markdown(f"{response}"))
-# you can also fetch the raw result from SQLAlchemy!
+
+
 response.metadata["result"]
+
 # manually set context text
 city_stats_text = (
     "This table gives information regarding the population and country of a"
@@ -121,9 +138,12 @@ city_stats_text = (
 )
 
 table_node_mapping = SQLTableNodeMapping(sql_database)
+
 table_schema_objs = [
     (SQLTableSchema(table_name="city_stats", context_str=city_stats_text))
 ]
+
+
 from llama_index.core.retrievers import NLSQLRetriever
 
 # default retrieval (return_raw=True)
@@ -144,9 +164,11 @@ for n in results:
 nl_sql_retriever = NLSQLRetriever(
     sql_database, tables=["city_stats"], return_raw=False
 )
+
 results = nl_sql_retriever.retrieve(
     "Return the top 5 cities (along with their populations) with the highest population."
 )
+
 # NOTE: all the content is in the metadata
 for n in results:
     display_source_node(n, show_source_metadata=True)

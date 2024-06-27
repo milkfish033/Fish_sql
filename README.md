@@ -1,5 +1,9 @@
 # Fish_sql 
 
+
+Contact info: mingyu@bu.edu
+
+
 ***What does this project do🐟:***
 
 `(i)Generating Mysql Query by calling LLM model`
